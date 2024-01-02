@@ -1,0 +1,106 @@
+{
+  "name": "fetcharoni",
+  "version": "1.0.0",
+  "description": "Simple and fast API testing",
+  "productName": "Fetcharoni",
+  "main": "minified/main.js",
+  "scripts": {
+    "start": "electron src/main.js",
+    "ep": "echo 'npm run build is recommended' && npx electron-packager ./minified fetcharoni --asar --overwrite --out=release-builds --icon=minified/static/fetcharoni.ico --platform=all",
+    "build": "electron-builder",
+    "esbuild": "echo 'BROKEN DO NOT RUN' && cd minified && esbuild main.js --bundle --allow-overwrite --outfile=main.js --platform=node",
+    "minify": "(if exist minified rmdir /S /Q minified) && xcopy src minified /E /I && cd minified && terser main.js -o main.js -c -m --comments false && terser static/script.js -o static/script.js -c -m --comments false"
+  },
+  "build": {
+    "asar": true,
+    "compression": "maximum",
+    "files": [
+      "./minified/**/*"
+    ],
+    "appId": "com.Axorax.Fetcharoni",
+    "copyright": "Copyright © 2023 Axorax",
+    "productName": "Fetcharoni",
+    "removePackageKeywords": true,
+    "win": {
+      "target": [
+        "portable",
+        "nsis",
+        "nsis-web",
+        "msi",
+        "zip",
+        "7z",
+        "tar.gz",
+        "tar.xz",
+        "tar.lz",
+        "tar.bz2",
+        "dir"
+      ],
+      "icon": "minified/static/fetcharoni.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip",
+        "7z",
+        "tar.gz",
+        "tar.xz",
+        "tar.lz",
+        "tar.bz2",
+        "dir"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "flatpak",
+        "apk",
+        "freebsd",
+        "pacman",
+        "deb",
+        "snap",
+        "rpm"
+      ],
+      "icon": "minified/static/fetcharoni.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "minified/static/fetcharoni.ico",
+      "uninstallerIcon": "minified/static/fetcharoni.ico",
+      "license": "LICENSE",
+      "allowToChangeInstallationDirectory": true,
+      "uninstallDisplayName": "Fetcharoni"
+    },
+    "msi": {
+      "oneClick": false,
+      "runAfterFinish": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "perMachine": false
+    },
+    "portable": {
+      "unicode": false,
+      "artifactName": "fetcharoni.exe"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Axorax/fetcharoni.git"
+  },
+  "keywords": [
+    "fetcharoni",
+    "api-testing"
+  ],
+  "author": "Axorax",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Axorax/fetcharoni/issues"
+  },
+  "homepage": "https://github.com/Axorax/fetcharoni#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "electron": "^27.0.4",
+    "electron-builder": "^24.6.4"
+  }
+}
